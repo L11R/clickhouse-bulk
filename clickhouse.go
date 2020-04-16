@@ -190,7 +190,7 @@ func (srv *ClickhouseServer) SendQuery(r *ClickhouseRequest) (response string, s
 		if resp.StatusCode >= 502 {
 			srv.Bad = true
 			err = ErrServerIsDown
-		} else if resp.StatusCode >= 400 {
+		} else if resp.StatusCode >= 400 || resp.StatusCode == 0 {
 			err = fmt.Errorf("Wrong server status %+v:\nresponse: %+v\nrequest: %#v", resp.StatusCode, s, r.Content)
 		}
 		return s, resp.StatusCode, err
